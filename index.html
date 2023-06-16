@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Sympathy Card</title>
+    <style>
+        .card__flip-wrap {
+        transition: opacity 0.4s 0.2s;
+        overflow: hidden;
+        }
+        .page {
+        width: 30vw;
+        height: 44vw;
+        float: left;
+        margin-bottom: 0.5em;
+        background: left top no-repeat;
+        background-size: cover;
+        }
+        .page:nth-child(even) {
+        clear: both;
+        }
+        .card__flip-wrap {
+        perspective: 250vw;
+        }
+        .card__flip-wrap .pages {
+            width: 30vw;
+            height: 44vw; 
+        position: relative;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+        border-radius: 4px;
+        transition: 1.4s all ease-in-out 0s;
+        }
+        .card__flip-wrap .pages.pages__flip {
+            width: 60vw;
+            height: 44vw;
+            transition: 0s;
+        }
+        .card__flip-wrap .page {
+        float: none;
+        clear: none;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        width: 30vw;
+        height: 44vw;
+        transform-origin: 0 0;
+        transition: transform 1.4s;
+        backface-visibility: hidden;
+        transform-style: preserve-3d;
+        cursor: pointer;
+        user-select: none;
+        background-color: #f0f0f0;
+        }
+        .card__flip-wrap .page:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0);
+        transition: background 0.7s;
+        z-index: 2;
+        }
+        .card__flip-wrap .page:nth-child(odd) {
+        pointer-events: all;
+        transform: rotateY(0deg);
+        right: 0;
+        border-radius: 0 4px 4px 0;
+        background-image: linear-gradient(to right, rgba(0,0,0,.15) 0%, rgba(0,0,0,0) 10%);
+        }
+        .card__flip-wrap .page:nth-child(odd):hover {
+        transform: rotateY(-15deg);
+        }
+        .card__flip-wrap .page:nth-child(odd):hover:before {
+        background: rgba(0, 0, 0, 0.03);
+        }
+        .card__flip-wrap .page:nth-child(odd):before {
+        background: rgba(0, 0, 0, 0);
+        }
+        .card__flip-wrap .page:nth-child(even) {
+        pointer-events: none;
+        transform: rotateY(180deg);
+        transform-origin: 100% 0;
+        left: 0;
+        border-radius: 4px 0 0 4px;
+        border-color: black;
+        background-image: linear-gradient(to left, rgba(0,0,0,.12) 0%, rgba(0,0,0,0) 10%);
+        }
+        .card__flip-wrap .page:nth-child(even):before {
+        background: rgba(0, 0, 0, 0.2);
+        }
+        .card__flip-wrap .page.grabbing {
+        transition: none;
+        }
+        .card__flip-wrap .page.flipped:nth-child(odd) {
+        pointer-events: none;
+        transform: rotateY(-180deg);
+        }
+        .card__flip-wrap .page.flipped:nth-child(odd):before {
+        background: rgba(0, 0, 0, 0.2);
+        }
+        .card__flip-wrap .page.flipped:nth-child(even) {
+        pointer-events: all;
+        transform: rotateY(0deg);
+        }
+        .card__flip-wrap .page.flipped:nth-child(even):hover {
+        transform: rotateY(15deg);
+        }
+        .card__flip-wrap .page.flipped:nth-child(even):hover:before {
+        background: rgba(0, 0, 0, 0.03);
+        }
+        .card__flip-wrap .page.flipped:nth-child(even):before {
+        background: rgba(0, 0, 0, 0);
+        }
+        .card--btn {
+            position: absolute;
+            top: 10px;
+            width: 80px;
+            padding: 10px;
+            height: 80px;
+            background: #000080;
+            color: #fff;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 13px;
+            text-transform: capitalize;
+            margin: 0;
+        }
+        .card__flip-front--open {
+            right: 10px;
+        }
+        .card__flip-back1--close {
+            left: 10px;
+        }
+        *,
+        * :before,
+        *:after {
+        box-sizing: border-box;
+        }
+        html,
+        body {
+        font-family: 'Lovers Quarrel', cursive;
+        background: #333;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        html {
+        height: 100%;
+        }
+        body {
+        min-height: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 2em 0;
+        line-height: 1.5em;
+        }
+        .page:nth-child(odd){
+        background-position: right top;
+        }
+
+        .page img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card__flip-back1 img {
+            width: 200%;
+        }
+        .card__flip-back2 img {
+            width: 200%;
+            transform: translateX(-50%);
+        }
+        .card__flip-wrap .page.flipped:nth-child(3) {
+            pointer-events: unset;
+            transform: unset !important; 
+        }
+        .card__flip-wrap .page:nth-child(3) {
+            overflow: hidden;
+        }
+
+        @media(max-width: 767px) {
+            body .pages__scroll {
+                overflow-y: hidden;
+                overflow-x: scroll;
+            }
+            .page,
+            .card__flip-wrap .pages,
+            .card__flip-wrap .page {
+                width: 60vw;
+                height: 90vw;
+                transition: 1.4s all ease-in-out;
+            }
+            .card__flip-wrap .pages.pages__flip {
+                width: 120vw;
+                height: 90vw;
+            }
+            .card--btn {
+                width: 65px;
+                height: 65px;
+                top: 5px;
+            }
+        }
+
+    </style>
+
+    </script>
+</head>
+<body>
+    <section class="card__flip-wrapper">
+        <div class="card__flip-wrap">
+            <div id="pages" class="pages">
+                <div class="card__flip-front page">
+                    <img src="0256AWM.jpg" alt="Front" class="card__flip-front-img">
+                    <p class="card__flip-front--open card--btn">Click to Open</p>
+                </div>
+                <div class="card__flip-back1 page">
+                    <img src="0256CWM_80824ae1-53c1-4b10-8168-81455d04a201.jpg" alt="Back" class="card__flip-back--img">
+                    <p class="card__flip-back1--close card--btn">Click to close</p>
+                </div>
+                <div class="card__flip-back2 page">
+                    <img src="0256CWM_80824ae1-53c1-4b10-8168-81455d04a201.jpg" alt="Back" class="card__flip-back--img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <script type="text/javascript" defer>
+          var pages = document.getElementsByClassName('page');
+            for(var i = 0; i < pages.length; i++)
+                {
+                var page = pages[i];
+                if (i % 2 === 0)
+                    {
+                    page.style.zIndex = (pages.length - i);
+                    }
+                }
+
+            document.addEventListener('DOMContentLoaded', function(){
+                for(var i = 0; i < pages.length; i++)
+                {
+                    //Or var page = pages[i];
+                    pages[i].pageNum = i + 1;
+                    pages[i].onclick=function()
+                    {
+                        var that = this;
+                        if (this.pageNum % 2 === 0)
+                        {
+                                this.classList.remove('flipped');
+                                this.previousElementSibling.classList.remove('flipped');
+                            setTimeout(function() {
+                                
+                                that.previousElementSibling.parentElement.classList.remove('pages__flip');
+                            }, 900);
+                            
+                            this.previousElementSibling.parentElement.parentElement.classList.remove('pages__scroll');
+                            this.previousElementSibling.parentElement.parentElement.parentElement.parentElement.style.display = 'flex';
+                        }
+                        else
+                        {
+                            this.classList.add('flipped');
+                            this.nextElementSibling.classList.add('flipped');
+                            this.nextElementSibling.parentElement.classList.add('pages__flip');
+                            this.nextElementSibling.parentElement.parentElement.classList.add('pages__scroll');
+                            if (window.matchMedia('(max-width: 768px)').matches) {
+                                this.nextElementSibling.parentElement.parentElement.parentElement.parentElement.style.display = 'block';
+                            } else {
+                                // Code to execute when the viewport width is larger than 768 pixels
+                                this.nextElementSibling.parentElement.parentElement.parentElement.parentElement.style.display = 'flex';
+                            }
+                        }
+                    }
+                }
+            })
+        
+    </script>
+</body>
+</html>
