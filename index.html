@@ -116,32 +116,33 @@
         .card__flip-wrap .page.flipped:nth-child(even):before {
         background: rgba(0, 0, 0, 0);
         }
-        .card--btn {
-            position: absolute;
-            bottom: 0px;
-            width: 60px;
-            padding: 10px;
-            height: 60px;
-            background: #000080;
-            color: #fff;
-/*             border-radius: 100%; */
-            border-top-left-radius: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: end;
-            text-align: center;
-            font-size: 13px;
-            text-transform: capitalize;
-            margin: 0;
-            line-height:1;
-            padding-right:0;
-        }
+       .card--btn {
+    position: absolute;
+    bottom: 0px;
+    width: 70px;
+    padding: 10px;
+    height: 70px;
+    background: #000080;
+    color: #fff;
+    border-radius: 100%;
+    /* border-top-left-radius: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 16px;
+    text-transform: capitalize;
+    margin: 0;
+    line-height: 1;
+    /* padding-right: 0; */
+    transform: translateX(50%);
+}
         .card__flip-front--open {
-            right: 0px;
+            right: 50%;
         }
-        .card__flip-back1--close {
+/*         .card__flip-back1--close {
             left: 10px;
-        }
+        } */
         *,
         * :before,
         *:after {
